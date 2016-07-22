@@ -70,7 +70,7 @@ def image_to_x(image_path):
     img = Image.open(image_path)
     img.load()
     img = img.resize((150,150))
-    data = np.asarray(img, dtype='int32')
+    data = np.asarray(img, dtype='int32').reshape((1,3,150,150))
     return data
 
 def usage():
@@ -80,7 +80,7 @@ if len(sys.argv) > 1:
     filename = sys.argv[1]
     if os.path.exists(filename):
         x = image_to_x(filename)
-        prediction = model.predict(x)
+        prediction = model.predict(x)[0][0]
         print(prediction)
     else:
         print("File %s does not exist" % filename)
